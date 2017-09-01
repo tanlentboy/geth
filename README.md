@@ -12,19 +12,30 @@ Run a Go Ethereum node via Docker.
 
 **Configuration**
 
-For use with Docker compose:
+For use with Docker,
 
 ```
-  ethereum:
-    image: datitect/ethereum
-    container_name: ethereum
+docker run -p 8545:8545 -p 30303:30303 \
+    -v /home/<user>/.ethereum/:/root/.ethereum:rw \
+    --restart=always --name=geth \
+    -d datitect/geth:latest \
+    geth --fast --cache=256 --rpc --rpcaddr '0.0.0.0' \
+    --rpccorsdomain '<host>' \
+    --ipcpath /tmp/geth.ipc
+```
+
+and Docker Compose:
+
+```
+  geth:
+    image: datitect/geth
+    container_name: geth
     command: geth --fast --cache=256 --rpc --rpcaddr '0.0.0.0'
       --rpccorsdomain '<host>'
       --ipcpath /tmp/geth.ipc
     restart: always
-    privileged: true
     volumes:
-      - ./ethereum/.ethereum/:/root/.ethereum:rw
+      - /home/<user>/.ethereum/:/root/.ethereum:rw
     ports:
       - 8545:8545
       - 30303:30303
