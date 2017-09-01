@@ -16,7 +16,7 @@ For use with Docker compose:
 
 ```
   ethereum:
-    build: ethereum
+    image: datitect/ethereum
     container_name: ethereum
     command: geth --fast --cache=256 --rpc --rpcaddr '0.0.0.0'
       --rpccorsdomain '<host>'
